@@ -59,27 +59,27 @@ return {
 
         //d3.select('.' + data[i].States).style("fill", "red");
 
-        st.style("fill", "red");
+        //st.style("fill", "red");
 
-        // if (data[i].medHouseIncome < 50000){
-        //     st.style("fill", "red");
-        // } else if (data[i].medHouseIncome >= 50000 && data[i].medHouseIncome < 55000){
-        //     st.style('fill', '#1D231E');
-        // }else if (data[i].medHouseIncome >= 55000 && data[i].medHouseIncome < 60000){
-        //     st.style('fill', '#1D231E');
-        // }else if (data[i].medHouseIncome >= 60000 && data[i].medHouseIncome < 65000){
-        //     st.style('fill', '#1D231E');
-        // }else if (data[i].medHouseIncome >= 65000 && data[i].medHouseIncome < 70000){
-        //     st.style('fill', '#1D231E');
-        // }else if (data[i].medHouseIncome >= 70000 && data[i].medHouseIncome < 75000){
-        //     st.style('fill', '#1D231E');
-        // }else if (data[i].medHouseIncome >= 75000 && data[i].medHouseIncome < 80000){
-        //     st.style('fill', '#1D231E');
-        // }else if (data[i].medHouseIncome >= 80000 && data[i].medHouseIncome < 85000){
-        //     st.style('fill', '#1D231E');
-        // }else if (data[i].medHouseIncome >= 85000){
-        //     st.style('fill', '#1D231E');
-        //}
+        if (data[i].medHouseIncome < 50000){
+            st.style("fill", "red");
+        } else if (data[i].medHouseIncome >= 50000 && data[i].medHouseIncome < 55000){
+            st.style('fill', '#1D231E');
+        }else if (data[i].medHouseIncome >= 55000 && data[i].medHouseIncome < 60000){
+            st.style('fill', '#1D231E');
+        }else if (data[i].medHouseIncome >= 60000 && data[i].medHouseIncome < 65000){
+            st.style('fill', '#1D231E');
+        }else if (data[i].medHouseIncome >= 65000 && data[i].medHouseIncome < 70000){
+            st.style('fill', '#1D231E');
+        }else if (data[i].medHouseIncome >= 70000 && data[i].medHouseIncome < 75000){
+            st.style('fill', '#1D231E');
+        }else if (data[i].medHouseIncome >= 75000 && data[i].medHouseIncome < 80000){
+            st.style('fill', '#1D231E');
+        }else if (data[i].medHouseIncome >= 80000 && data[i].medHouseIncome < 85000){
+            st.style('fill', '#1D231E');
+        }else if (data[i].medHouseIncome >= 85000){
+            st.style('fill', '#1D231E');
+        }
     }
 
     d3.select(window).on('resize', function() {
