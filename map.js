@@ -1,69 +1,88 @@
-d3.csv('MedianIncome.csv', function(d) {
-    return {
-        state: d.States,
+d3.csv('https://raw.githubusercontent.com/anabeen/NarrativeProject/main/MedianIncome.csv', 
+function(data) {
+    data.forEach(function(d) {
+        d.Income = +d.Income;
+        d["Year Ago from period"] = +d["Year Ago from period"];
+        d["NumBillionaireResidents"] = +d["NumBillionaireResidents"];
+        //console.log(d.States);
+      });        
+      //console.log(data[0].NumBillionaireResidents);
+
+  });
+
+d3.csv('https://raw.githubusercontent.com/anabeen/NarrativeProject/main/MedianIncome.csv', function(d) {
+return {
+        States: d.States,
         medHouseIncome: +d.Income.replace(',',''),
+        BillionaireCount: +d["NumBillionaireResidents"],
     };
 }, function (data) {
-    d3.select('body').style('background-color','black');
 
     const map = new Datamap({
         scope: 'usa',
-        element: document.getElementById('USAmapContainer'),
+        element: document.getElementById('mapContainer'),
         responsive: true,
         geographyConfig: {
             highlightOnHover: false,
             popupTemplate: function(geo){
+
+                //console.log(geo.properties.name);
+                //console.log(typeof geo.properties.name);
+                //console.log(data[0].States);
+                //console.log(typeof data[0].States);
+
                 function findState(states) {
-                    return states.state = geo.id;
+                    for (var i=0; i < data.length; i++){
+                        if (data[i].States == states)
+                        {
+                            return i;
+                        }
+                    }
                 }
+
+                //console.log(data[findState(geo.properties.name)].medHouseIncome);
+
                 return [
                     '<div class = "hoverinfo"><strong>',
                     geo.properties.name,
-                    ': $' + data.find(findState).medHouseIncome,
+                    ': $ ' + data[findState(geo.properties.name)].medHouseIncome,
+                    '\r\n Num of Billionaire Residents ' + data[findState(geo.properties.name)].BillionaireCount,
                     '</strong></div>'].join('');
-                
-
             }
         }
     });
 
-    //colors for different income
-    const underFifty = '#88FC97',
-            fiftyThruFiftyfive = '#6BEC7C',
-            fiftyfiveThruSixty = '#54DC66',
-            sixtyThruSixtyfive = '#42CB54',
-            sixtyfiveThruSeventy = '#30C343',
-            seventyThruSeventyfive = '#22BA36',
-            seventyfiveThruEighty = '#17AF2B',
-            eightyThruEightyfive = '#10A423',
-            overEightyfive =  '#0C9A1E';
-
+            
     //loop through each state and assign color based on income
     for (var i=0; i < data.length; i++){
-        let st = d3.select(',' + data[i].state);
+        let st = d3.select('.' + data[i].States);
 
-        if (data[i].medHouseIncome < 50000){
-            st.style('fill', underFifty);
-        } else if (data[i].medHouseIncome >= 50000 && data[i].medHouseIncome < 55000){
-            st.style('fill', fiftyThruFiftyfive);
-        }else if (data[i].medHouseIncome >= 55000 && data[i].medHouseIncome < 60000){
-            st.style('fill', fiftyfiveThruSixty);
-        }else if (data[i].medHouseIncome >= 60000 && data[i].medHouseIncome < 65000){
-            st.style('fill', sixtyThruSixtyfive);
-        }else if (data[i].medHouseIncome >= 65000 && data[i].medHouseIncome < 70000){
-            st.style('fill', sixtyfiveThruSeventy);
-        }else if (data[i].medHouseIncome >= 70000 && data[i].medHouseIncome < 75000){
-            st.style('fill', seventyThruSeventyfive);
-        }else if (data[i].medHouseIncome >= 75000 && data[i].medHouseIncome < 80000){
-            st.style('fill', seventyfiveThruEighty);
-        }else if (data[i].medHouseIncome >= 80000 && data[i].medHouseIncome < 85000){
-            st.style('fill', eightyThruEightyfive);
-        }else if (data[i].medHouseIncome >= 85000){
-            st.style('fill', overEightyfive);
-        }
+        //d3.select('.' + data[i].States).style("fill", "red");
+
+        st.style("fill", "red");
+
+        // if (data[i].medHouseIncome < 50000){
+        //     st.style("fill", "red");
+        // } else if (data[i].medHouseIncome >= 50000 && data[i].medHouseIncome < 55000){
+        //     st.style('fill', '#1D231E');
+        // }else if (data[i].medHouseIncome >= 55000 && data[i].medHouseIncome < 60000){
+        //     st.style('fill', '#1D231E');
+        // }else if (data[i].medHouseIncome >= 60000 && data[i].medHouseIncome < 65000){
+        //     st.style('fill', '#1D231E');
+        // }else if (data[i].medHouseIncome >= 65000 && data[i].medHouseIncome < 70000){
+        //     st.style('fill', '#1D231E');
+        // }else if (data[i].medHouseIncome >= 70000 && data[i].medHouseIncome < 75000){
+        //     st.style('fill', '#1D231E');
+        // }else if (data[i].medHouseIncome >= 75000 && data[i].medHouseIncome < 80000){
+        //     st.style('fill', '#1D231E');
+        // }else if (data[i].medHouseIncome >= 80000 && data[i].medHouseIncome < 85000){
+        //     st.style('fill', '#1D231E');
+        // }else if (data[i].medHouseIncome >= 85000){
+        //     st.style('fill', '#1D231E');
+        //}
     }
 
-    d3.select(window).on('recize', function() {
+    d3.select(window).on('resize', function() {
         map.resize ();
     });
 });
